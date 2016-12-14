@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Cs109a anomaly by atikinn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Cs109a anomaly</h1>
+      <h2 class="project-tagline">Repo for the anomaly detection project for CS109a (Fall 2016)</h2>
+      <a href="https://github.com/atikinn/cs109a_anomaly" class="btn">View on GitHub</a>
+      <a href="https://github.com/atikinn/cs109a_anomaly/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/atikinn/cs109a_anomaly/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h3>
+
+<p>When looking at streaming data, one may want to get an alert or notification when an anomaly is detected.  An anomaly is an "event" that is not considered normal or expected.  This could consist of streaming data that contains data outside the expected probability distribution or the fact that the properties of the distribution are changing themselves over time, such as variance.  </p>
+
+<p>The detection of anomalies can have various applications.  One may be interested in having a model to detect and alert operators when a sensor is generating abnormal data, which could mean failure of a sensor or an issue with a production line for a product. Anomoly detection could also be applied to other industries, such as finance, economics, and sciences. </p>
+
+<p>For the Data Science Project, our group developed a model and explored the capabilities of anomaly detection method known as "Testing Exchangeability Online", proposed by Vladimir Vovk et al. (Vovk, 2003). Additionally, a "Plug-in Martingales for Testing Exchability On-Line" was also explored and implemented (Fedorova, 2012).</p>
+
+<h3>
+<a id="model-description" class="anchor" href="#model-description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Model Description</h3>
+
+<p>Their technique is essentially based on the assumption of exchangeability in the data where the joint distribution of observed features does not change under any order permutation of those observations if there is no anomaly in the data. Such approach is very close to the common iid (independent identically distributed) concept. In their technique, they create for each observation a p-value based on a measure of how close the newly observed data point is to all the previously observed ones. Based on the exchangeability assumption, a martingale can be constructed with all the p-values using a joining function (betting function) for all the calculated p-values. The behavior of this martingale is the metric used to assess the presence of an anomaly since any anomaly is assumed to be nonconformal with the exchangeability hypothesis. In this case a high martingale value is an indication of an anomaly (Vovk, 2003).</p>
+
+<p>In Vovk's et al. original work they proposed a power martingale as a betting function. This proposal is totally suitable when there are many small p-values in the sequence. In other words, the data distribution is consistent for most of the sampling time. When there are changes in the data distribution in a way that the calculated p-values are large, the martingale will not grow sufficiently enough when an anomaly occurs to reject the exchangeability assumption (Vovk, 2003).</p>
+
+<p>The martingale is in the form of: </p>
+
+<p>$$s_n = \prod_{i=1}^{n}f_i(p_i), n = 1, 2, ...$$</p>
+
+<p>Where <i>n</i> represent the observed data and $f_i(p_i)$ represents the betting function in the form of:
+$$f_i(p) = \epsilon p^{(\epsilon -1)}$$</p>
+
+<p>Where <i>p</i> are the calculated p-values and epsilon is a value between <a href="Vovk,%202003">0,1</a>.</p>
+
+<p>Here $\epsilon$ is [0,1] and can be selected according to specific application (Ho, 2010). However, another approach where a mix of all possible $\epsilon$ values within the range [0,1] can be applied. In this case, the Mix martingale (Vovk et al., 2003) will take the form of
+$$M_n = \int_{0}^{1} M_n^{(\epsilon)}d\epsilon $$</p>
+
+<p>In our analysis, we will apply both approaches, the specified (tuned) $\epsilon$ and the mixed martingale where the integration of all possible values of $\epsilon$ is applied</p>
+
+<p>A variation of this method incorporates a new betting function, known as a "plug-in", in a form of:
+$$ \rho_i =  \hat{\rho}(p_1, p_2,...,p_{i-1},p)$$</p>
+
+<p>Where this plug-in represents the joint distribution function of all observed p-values and is used instead of the power martingales.</p>
+
+<p>In our analysis, we will follow the method depicted in Fedorova et al.,2012 for the plugin martingale </p>
+
+<h4>
+<a id="strangeness-functions" class="anchor" href="#strangeness-functions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Strangeness Functions</h4>
+
+<p>In the above equation the <i>p</i> value is calculated based on a measure called the strangeness measure which is a measure for how far the data point is from the "mass". In our analysis, we are considering three types:</p>
+
+<ul>
+<li>The jump rate which measures how much change occurs in one time step compared to the average rate. This measure can be effective to detect outliers</li>
+<li>The variation measure which measures how far a point is from a standardized distribution of the data. This approach is adapted for heterosdatastic anomaly detection</li>
+<li>The last one which is a distance from the center of the data cluster. This approach is close to the k- mean clustering and is useful for multivariate data analysis</li>
+</ul>
+
+<p>For a strangeness measure $\alpha_n$, the <i>p</i> value can be computed as</p>
+
+<p>$$p_i = \frac{#(i:\alpha_i&gt;\alpha_n) + \theta_n#(i:\alpha_i=\alpha_n)}{n}$$</p>
+
+<p>Where $#$ indicates the cardinality and $\theta_n$ is a uniform random number between [0,1]</p>
+
+<h4>
+<a id="model-implementation-procedure" class="anchor" href="#model-implementation-procedure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Model Implementation procedure:</h4>
+
+<p>According to the literature, three variants of the martingale method can be distinguished and are namely:</p>
+
+<ul>
+<li>The Power martingale with predetermined $\epsilon$ value</li>
+<li>The mix martingale</li>
+<li>The plugin martingale</li>
+</ul>
+
+<p>The implementation will follow the algorithm described in Fedorova et al., 2012 according to the following steps:</p>
+
+<ul>
+<li><p>Data pre-processing including normalization and the application of <i>t</i> step filter. The main purpose of this filter is to reduce the memory content</p></li>
+<li><p>computation of the reference strangeness value based on a benchmark data condition or a training data set</p></li>
+<li>computation of the p-value based on the developed strangeness measure</li>
+<li>calculation of the martingale using the calculated p-value</li>
+</ul>
+
+<p>For better computational performance, the logarithmic martingale will be considered instead of the actual martingale. Otherwise, the exponential increase in the martingale value will eradicate the method usefulness.</p>
+
+<p>From this point forward, the expression martingale will always refer to the log(martingale)</p>
+
+<p>As a final step, the change detection of the martingales will be evaluated as a metric to detect the change in the bid progress that can be a signature of an anomaly</p>
+
+<h3>
+<a id="data" class="anchor" href="#data" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Data</h3>
+
+<p>The data considered represents the climatological data gathered from ten Ocean Buoys located in the western Atlantic. The ten Buoy spans the region between southern Bermuda to Puerto Rico. </p>
+
+<p><img src="IMG/Bouy_Loc.png">
+<a href="https://github.com/atikinn/cs109a_anomaly/blob/master/Submission/Show_Bouy_Location.ipynb">Notebook that generates the image</a></p>
+
+<p>The data includes atmospheric and oceanic information. The buoy considered in this study are owned by NOAA and the National Weather Service. However, there are other buoy operating in the same area owned by different parties. In actual studies, all the data from all the buoys are considered which make this data accessible to all concerned entities. For this project, we are considering the NOAA buoys as their data are available to the public and the contained information is sufficient to the project objective. The following picture depicts how the buoy looks like:</p>
+
+<p><img src="IMG/bouy.jpg">
+(source: <a href="http://www.ndbc.noaa.gov/station_page.php?station=44065">NOAA</a>)</p>
+
+<p>Each buoy data is divided in separate files where each file corresponds to a specific month. The period considered is between January 2016 and September 2016. The observations are sampled on an hourly basis. The features in the data includes:</p>
+
+<ul>
+<li>Wind Direction 
+</li>
+<li>Wind Speed 
+</li>
+<li>Wind Gust
+</li>
+<li>Wave Height
+</li>
+<li>Dominant Wave Period
+</li>
+<li>Average Period
+</li>
+<li>Mean Wave Direction
+</li>
+<li>Atmospheric Pressure
+</li>
+<li>Pressure Tendency
+</li>
+<li>Air Temperature Water
+</li>
+<li>Temperature
+</li>
+<li>Wind Speed at 10 Meters
+</li>
+<li>Wind Speed at 20 Meters
+</li>
+</ul>
+
+<p>For each sensor, missing data is designated as series of 9's, such as 99.0 or 9999.0. These values are converted into null values so that they can be removed prior to applying the data to the anomaly detection models. The following is an example time-series plot of one feature of the data set, representing the Average Wave Period.</p>
+
+<p><img src="IMG/avg_wave_period.png">
+<a href="https://github.com/atikinn/cs109a_anomaly/blob/master/Submission/BuoyDataExploration.ipynb">Corresponding notebook with code</a></p>
+
+<p>The timeseries plot shows the reality of real world data - it is not clean and organized.  With such chaotic data, anomaly detection may prove to be challenging.  Therefor the buoy data is a good data set for testing for anomalies.</p>
+
+<p>All data and modeling files can be obtained from the <a href="https://github.com/atikinn/cs109a_anomaly">Github</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/atikinn/cs109a_anomaly">Cs109a anomaly</a> is maintained by <a href="https://github.com/atikinn">atikinn</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
