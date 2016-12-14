@@ -188,9 +188,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h3><p>When looking at streaming data, one may want to get an alert or notification when an anomoly is detected.  An anomoly is an "event" that is not considered normal or expected.  This could consist of streaming data that contains data outside the expected probability distribution or the fact that the properties of the distribution are changing themselves over time, such as variance.</p>
-<p>The detection of anomolies can have various applications.  One may be interested in having a model to detect and alert operators when a sensor is generating abnormal data, which could mean failure of a sensor or an issue with a production line for a product. Anomoly detection could also be applied to other industries, such as finance, economics, and sciences.</p>
-<p>For the Data Science Project, our group developed a model and explored the capabilities of anomoly detection method known as "Testing Exchangeability Online", proposed by Vladimir Vovk et al. (Vovk, 2003). Additionally, a "Plug-in Martingales for Testing Exchability On-Line" was also explored and implemented (Fedorova, 2012).</p>
+<h3 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h3><p>When looking at streaming data, one may want to get an alert or notification when an anomaly is detected.  An anomaly is an "event" that is not considered normal or expected.  This could consist of streaming data that contains data outside the expected probability distribution or the fact that the properties of the distribution are changing themselves over time, such as variance.</p>
+<p>The detection of anomalies can have various applications.  One may be interested in having a model to detect and alert operators when a sensor is generating abnormal data, which could mean failure of a sensor or an issue with a production line for a product. Anomoly detection could also be applied to other industries, such as finance, economics, and sciences.</p>
+<p>For the Data Science Project, our group developed a model and explored the capabilities of anomaly detection method known as "Testing Exchangeability Online", proposed by Vladimir Vovk et al. (Vovk, 2003). Additionally, a "Plug-in Martingales for Testing Exchability On-Line" was also explored and implemented (Fedorova, 2012).</p>
 
 </div>
 </div>
@@ -223,7 +223,7 @@ $$ \rho_i =  \hat{\rho}(p_1, p_2,...,p_{i-1},p)$$</p>
 $$p_i = \frac{\#(i:\alpha_i>\alpha_n) + \theta_n\#(i:\alpha_i=\alpha_n)}{n}$$<p>Where $\#$ indicates the cardinality and $\theta_n$ is a uniform random number between [0,1]</p>
 <h4 id="Model-Implementation-procedure:">Model Implementation procedure:<a class="anchor-link" href="#Model-Implementation-procedure:">&#182;</a></h4><p>According to the literature, three variants of the martingale method can be distinguished and are namely:</p>
 <ul>
-<li>The Power martingale with pre-determined $\epsilon$ value</li>
+<li>The Power martingale with predetermined $\epsilon$ value</li>
 <li>The mix martingale</li>
 <li>The plugin martingale</li>
 </ul>
@@ -248,7 +248,7 @@ $$p_i = \frac{\#(i:\alpha_i>\alpha_n) + \theta_n\#(i:\alpha_i=\alpha_n)}{n}$$<p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Data">Data<a class="anchor-link" href="#Data">&#182;</a></h3><p>The data considered represents the climatological data gathered from ten Ocean Buoy located in the western Atlantic. The ten Buoy spans the region between southern Bermuda to Puerto Rico.</p>
+<h3 id="Data">Data<a class="anchor-link" href="#Data">&#182;</a></h3><p>The data considered represents the climatological data gathered from ten Ocean Buoys located in the western Atlantic. The ten Buoy spans the region between southern Bermuda to Puerto Rico.</p>
 <p><img src="IMG/Bouy_Loc.png"></p>
 <p>The data includes atmospheric and oceanic information. The buoy considered in this study are owned by NOAA and the National Weather Service. However, there are other buoy operating in the same area owned by different parties. In actual studies, all the data from all the buoys are considered which make this data accessible to all concerned entities. For this project, we are considering the NOAA buoys as their data are available to the public and the contained information is sufficient to the project objective. The following picture depicts how the buoy looks like:</p>
 <p><img src="IMG/bouy.jpg">
@@ -268,9 +268,9 @@ $$p_i = \frac{\#(i:\alpha_i>\alpha_n) + \theta_n\#(i:\alpha_i=\alpha_n)}{n}$$<p>
 <li>Temperature
 <li>Wind Speed at 10 Meters
 <li>Wind Speed at 20 Meters
-</ul><p>For each sensor, missing data is designated as series of 9's, such as 99.0 or 9999.0. These values are converted into null values so that they can be removed prior to applying the data to the anomoly detection models. The following is an example time-series plot of one feature of the data set, representing the Average Wave Period.</p>
+</ul><p>For each sensor, missing data is designated as series of 9's, such as 99.0 or 9999.0. These values are converted into null values so that they can be removed prior to applying the data to the anomaly detection models. The following is an example time-series plot of one feature of the data set, representing the Average Wave Period.</p>
 <p><img src="IMG/avg_wave_period.png"></p>
-<p>The timeseries plot shows the reality of real world data - it is not clean and organized.  With such chaotic data, anomoly detection may prove to be challenging.  Therefor the buoy data is a good data set for testing for anomolies.</p>
+<p>The timeseries plot shows the reality of real world data - it is not clean and organized.  With such chaotic data, anomaly detection may prove to be challenging.  Therefor the buoy data is a good data set for testing for anomalies.</p>
 <p>All data and modeling files can be obtained from the <a href="https://github.com/atikinn/cs109a_anomaly">Github</a></p>
 
 </div>
@@ -283,7 +283,7 @@ $$p_i = \frac{\#(i:\alpha_i>\alpha_n) + \theta_n\#(i:\alpha_i=\alpha_n)}{n}$$<p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Testing-of-the-Anomaly-Detection-Model">Testing of the Anomaly Detection Model<a class="anchor-link" href="#Testing-of-the-Anomaly-Detection-Model">&#182;</a></h3><p>The Testing Exchangeability Online and the Plug-in Martingale variation was implemented using Python.  The developed model is available in the following notebook <a href = "https://github.com/atikinn/cs109a_anomaly/blob/master/Submission/BasicAnomalies.ipynb">BasicAnomalies.ipynb</a></p>
 <p>The main objective was to investigate the applicability of the developed method on different types of anomalies that could exist in the data in hand.</p>
-<p>As a demonstration of the model concept, a single variable anomaly is selected. For this purpose both the wind speed and the pressure were selected based on the completeness of the data and the existance of obvious anomalies that could be good candidates for the demonstration. The following figure shows a sample of those two values and the types of anomalies that could be spotted from simple time series visualization.</p>
+<p>As a demonstration of the model concept, a single variable anomaly is selected. For this purpose both the wind speed and the pressure were selected based on the completeness of the data and the existence of obvious anomalies that could be good candidates for the demonstration. The following figure shows a sample of those two values and the types of anomalies that could be spotted from simple time series visualization.</p>
 <p><img src="IMG/raw_outliers.png"></p>
 <p>To check if there is a significant spectral slope in the selected signal that could be a good target for a detection algorithm, a Fast Fourier Transform was executed and no evidence can be spotted for obvious spectral slope as demonstrated in the spectrum below.</p>
 <p><img src="IMG/pre_fft.png"></p>
@@ -292,8 +292,8 @@ $$p_i = \frac{\#(i:\alpha_i>\alpha_n) + \theta_n\#(i:\alpha_i=\alpha_n)}{n}$$<p>
 <li>Outliers</li>
 <li>Floor change</li>
 </ul>
-<h4 id="Training-and-Test">Training and Test<a class="anchor-link" href="#Training-and-Test">&#182;</a></h4><p>The training and test is essential for the evaluation of the strangness functions. Since the strangness measure evaluate how much a data point deviates from a reference condition. For this purpose, the refernce condition is determined by the training data set regardless of whether this reference condition is distance, jump rate or a variability measure.</p>
-<h4 id="Training-and-Test-Data">Training and Test Data<a class="anchor-link" href="#Training-and-Test-Data">&#182;</a></h4><p>From the visual inspection, it was found that the data for buoy number 41041 for both the wind speed and the surface pressure are free from outliers and their floor changes are minimal. At the same time, the wind speed data for the other buoys include obvious outliers. Accordingly, the wind speed data was considered for the outlier detection application and the surface pressure data was considered for floor change. The reason for selecting the surface pressure for floor change detection was the existance of floor change signature in the visualization of the 41047 buoy pressure data. Accordingly, the following is determined:</p>
+<h4 id="Training-and-Test">Training and Test<a class="anchor-link" href="#Training-and-Test">&#182;</a></h4><p>The training and test is essential for the evaluation of the strangeness functions. Since the strangeness measure evaluate how much a data point deviates from a reference condition. For this purpose, the reference condition is determined by the training data set regardless of whether this reference condition is distance, jump rate or a variability measure.</p>
+<h4 id="Training-and-Test-Data">Training and Test Data<a class="anchor-link" href="#Training-and-Test-Data">&#182;</a></h4><p>From the visual inspection, it was found that the data for buoy number 41041 for both the wind speed and the surface pressure are free from outliers and their floor changes are minimal. At the same time, the wind speed data for the other buoys include obvious outliers. Accordingly, the wind speed data was considered for the outlier detection application and the surface pressure data was considered for floor change. The reason for selecting the surface pressure for floor change detection was the existence of floor change signature in the visualization of the 41047 buoy pressure data. Accordingly, the following is determined:</p>
 <ul>
 <li>The 41041 buoy windspeed and pressure data were selected for training</li>
 <li>The 41043 buoy windspeed data and 41047 pressure data were selected for the outlier and floor change detection test respectively.</li>
@@ -400,7 +400,7 @@ In the above figures, the eye of the hurricane can be distinguished as a dip in 
 <p>In order to be practical for big data application two factors should be satisfied:</p>
 <ul>
 <li>Minimum memory content in the data variance to prevent any overflowing in evaluating the martingales.</li>
-<li>Select a type of power martingale that is not computationally exhaustive. In our case, the power martingale with pre-defined epsilon could be a good candidate since it does not include the integration step of the mixed martingale and the exhaustive distribution fit of the plugin martingale. In our example, it was found that for 22000 observations the computation time for each method was:<ul>
+<li>Select a type of power martingale that is not computationally exhaustive. In our case, the power martingale with predefined epsilon could be a good candidate since it does not include the integration step of the mixed martingale and the exhaustive distribution fit of the plugin martingale. In our example, it was found that for 22000 observations the computation time for each method was:<ul>
 <li>6 seconds for the power martingale with predefined $\epsilon$</li>
 <li>13 seconds for the mixed martingale</li>
 <li>300 seconds for plugin martingale with Gaussian kernel and Silverman rule for bandwidth selection.</li>
@@ -409,7 +409,7 @@ In the above figures, the eye of the hurricane can be distinguished as a dip in 
 </ul>
 <p><strong> High dimension data:</strong></p>
 <p>The real interface between the actual data and the martingale computation is the strangeness function. If the strangeness function is capable to handle high dimension data, the method can be applied.</p>
-<p>The strangeness function can also accommodate some dimension reduction techniques like the principle component analysis for high dimension data.</p>
+<p>The strangeness function can also accommodate some dimension reduction techniques like the principal component analysis for high dimension data.</p>
 <p>In our analysis we used a strangeness function based on the distance between clusters which was convenient to data with more than one dimension.</p>
 
 </div>
