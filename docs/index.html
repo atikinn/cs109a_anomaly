@@ -128,14 +128,14 @@ div#notebook {
   div.cell {
     display: block;
     page-break-inside: avoid;
-  } 
-  div.output_wrapper { 
-    display: block;
-    page-break-inside: avoid; 
   }
-  div.output { 
+  div.output_wrapper {
     display: block;
-    page-break-inside: avoid; 
+    page-break-inside: avoid;
+  }
+  div.output {
+    display: block;
+    page-break-inside: avoid;
   }
 }
 </style>
@@ -250,14 +250,14 @@ $$p_i = \frac{\#(i:\alpha_i>\alpha_n) + \theta_n\#(i:\alpha_i=\alpha_n)}{n}$$<p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Data">Data<a class="anchor-link" href="#Data">&#182;</a></h3><p>The data considered represents the climatological data gathered from ten Ocean Buoys located in the western Atlantic. The ten Buoy spans the region between southern Bermuda to Puerto Rico.</p>
 <p><img src="IMG/Bouy_Loc.png">
-<a href = "https://github.com/atikinn/cs109a_anomaly/blob/master/Submission/Show_Bouy_Location.ipynb">Notebook that generates the image</a></p>
+<a href = "show_location.html">Notebook that generates the image</a></p>
 <p>The data includes atmospheric and oceanic information. The buoy considered in this study are owned by NOAA and the National Weather Service. However, there are other buoy operating in the same area owned by different parties. In actual studies, all the data from all the buoys are considered which make this data accessible to all concerned entities. For this project, we are considering the NOAA buoys as their data are available to the public and the contained information is sufficient to the project objective. The following picture depicts how the buoy looks like:</p>
 <p><img src="IMG/bouy.jpg">
 (source: <a href="http://www.ndbc.noaa.gov/station_page.php?station=44065">NOAA</a>)</p>
 <p>Each buoy data is divided in separate files where each file corresponds to a specific month. The period considered is between January 2016 and September 2016. The observations are sampled on an hourly basis. The features in the data includes:</p>
 <ul>
-<li>Wind Direction 
-<li>Wind Speed 
+<li>Wind Direction
+<li>Wind Speed
 <li>Wind Gust
 <li>Wave Height
 <li>Dominant Wave Period
@@ -271,7 +271,7 @@ $$p_i = \frac{\#(i:\alpha_i>\alpha_n) + \theta_n\#(i:\alpha_i=\alpha_n)}{n}$$<p>
 <li>Wind Speed at 20 Meters
 </ul><p>For each sensor, missing data is designated as series of 9's, such as 99.0 or 9999.0. These values are converted into null values so that they can be removed prior to applying the data to the anomaly detection models. The following is an example time-series plot of one feature of the data set, representing the Average Wave Period.</p>
 <p><img src="IMG/avg_wave_period.png">
-<a href="https://github.com/atikinn/cs109a_anomaly/blob/master/Submission/BuoyDataExploration.ipynb">Corresponding notebook with code</a></p>
+<a href="data_exploration.html">Corresponding notebook with code</a></p>
 <p>The timeseries plot shows the reality of real world data - it is not clean and organized.  With such chaotic data, anomaly detection may prove to be challenging.  Therefor the buoy data is a good data set for testing for anomalies.</p>
 <p>All data and modeling files can be obtained from the <a href="https://github.com/atikinn/cs109a_anomaly">Github</a></p>
 
@@ -338,7 +338,7 @@ $$p_i = \frac{\#(i:\alpha_i>\alpha_n) + \theta_n\#(i:\alpha_i=\alpha_n)}{n}$$<p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Application-of-Model-to-Detect-Hurricane-Matthew">Application of Model to Detect Hurricane Matthew<a class="anchor-link" href="#Application-of-Model-to-Detect-Hurricane-Matthew">&#182;</a></h3><p>We adapted the Testing Exchangeability Online anomaly detection method to see if it could be used in a real  climatological application based on the buoy data. For this purpose, hurricane Matthew was benchmarked for this application for two reasons. The first, the magnitude of the storm: "Hurricane Mathew was the most significant storm to hit the Carribean area in the end September 2016 and into early October 2016 (The Weather Channel, 2016)"</p>
-<p>With quick investigation it was found that two buoys in the Caribbean could be good candidates to build the model upon them, buoy 42059 and 42058 based on the fact that both of them were subjected to only one major event during the 2016 season which is hurricane Matthew and both endured a direct hit <a href="http://komonews.com/weather/scotts-weather-blog/buoy-takes-direct-strike-from-hurricane-matthew-measuring-its-weather-all-the-way">(though one was affected more than the other)</a>. 
+<p>With quick investigation it was found that two buoys in the Caribbean could be good candidates to build the model upon them, buoy 42059 and 42058 based on the fact that both of them were subjected to only one major event during the 2016 season which is hurricane Matthew and both endured a direct hit <a href="http://komonews.com/weather/scotts-weather-blog/buoy-takes-direct-strike-from-hurricane-matthew-measuring-its-weather-all-the-way">(though one was affected more than the other)</a>.
 Buoy 42059 was used to investigate the different tasks and tune the model and buoy 42058 was seen more suitable for the validation. This is because if we train the model on the strongest evidence we may be underfitting.</p>
 <p><img src="IMG/matthew-history.jpg">
 (source: <a href ="https://dsx.weather.com//util/image/w/matthew-history.jpg?v=ap&w=980&h=551&api=7db9fe61-7414-47b5-9871-e17d87b8b6a0">The Weather Channel</a>)</p>
@@ -348,7 +348,7 @@ Buoy 42059 was used to investigate the different tasks and tune the model and bu
 <h4 id="Martingale-Calculation">Martingale Calculation<a class="anchor-link" href="#Martingale-Calculation">&#182;</a></h4><p>Two types of martingales were considered for this task: the power martingale with a pre-selected $\epsilon$ and the mix martingale. The plugin martingale was dropped since it was taking a considerable amount of time for computation and as previously seen it is not convenient for this type of data.</p>
 <p>For the case of the power martingale with fixed $\epsilon$, the value of $\epsilon$ was considered a tuning parameter to be defined.</p>
 <p>In this case a strangeness function based on the distance was selected based on its suitability for the multivariate case.</p>
-<h4 id="Model-Tuning">Model Tuning<a class="anchor-link" href="#Model-Tuning">&#182;</a></h4><p><a href="https://github.com/atikinn/cs109a_anomaly/blob/master/Submission/Matthew_tuning.ipynb">Notebook Matthew_tuning.ipynb</a></p>
+<h4 id="Model-Tuning">Model Tuning<a class="anchor-link" href="#Model-Tuning">&#182;</a></h4><p><a href="matthew_tuning.html">Notebook Matthew_tuning</a></p>
 <p>For the purpose of tuning the model, the data from buoy 42059 was considered. Since only one event is present in the data, a cross validation technique cannot be applied. Hence, the tuning will be based on varying the model's tunable parameters to achieve an optimum performance score for the hurricane detection. This score is described below.</p>
 <p>The model tuning is different from the power martingale with fixed $\epsilon$ and the Mix martingale. In the first case the tuning is performed for two parameters and in the second, the tuning is performed for the delay to be applied for the difference filter.</p>
 <p>The criteria (or score) to be used for the tuning is in fact the maximum detectability of the hurricane. In other words, the model is tuned to achieve a maximum value of the change detection in the hurricane.</p>
@@ -363,7 +363,7 @@ Buoy 42059 was used to investigate the different tasks and tune the model and bu
 <p>The tuning results for the mix martingale for best delay were found to be close to the first case. The following figure displays the comparison between both tuned methods.</p>
 <p><img src="IMG/comparetune.png"></p>
 <p><img src="IMG/compareheat.png"></p>
-<h4 id="Detection">Detection<a class="anchor-link" href="#Detection">&#182;</a></h4><p><a href="https://github.com/atikinn/cs109a_anomaly/blob/master/Submission/Matthew_Detection.ipynb">Notebook Matthew_Detection.ipynb</a></p>
+<h4 id="Detection">Detection<a class="anchor-link" href="#Detection">&#182;</a></h4><p><a href="metthew_detection.html">Notebook Matthew_Detection</a></p>
 <p>When the the model applied to the buoy 42058 data which is supposed to be exactly in the path of the hurricane the following results were obtained.</p>
 <p><img src="IMG/mat_det_graph.png"></p>
 <p>A qualitative representation of the difference between both methods can be shown in the following figure.</p>
@@ -423,7 +423,7 @@ In the above figures, the eye of the hurricane can be distinguished as a dip in 
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h3><p>The results from our exploration indicate that Testing Exchangeability Online is an anomaly detector for time series data that can have an acceptable performance if specifically tailored for an anomaly type.</p>
-<p>A file containing the model to be used is linked here <a href="">Notebook ProductionModel</a></p>
+<p>A file containing the model to be used is linked here <a href="production_model.html">Notebook Production Model</a></p>
 <p>However, the shortfalls experienced throughout this analysis can be attributed to the fact that the exchangeability is better suited for time series data with small memory variance component. The other disadvantage comes from the martingale function which is based on a cumulative evaluation that is not sensitive enough to short transient anomalies. Some mitigation to the later condition can be achieved by selecting a specific strangeness function that can capture these types of anomalies with high confidence. However, the outcome of different types of these anomalies should be evaluated on a case by case basis.</p>
 <p>According to the presented analysis, the following can be proposed as open points for future investigation:</p>
 <ul>
