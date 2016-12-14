@@ -249,7 +249,8 @@ $$p_i = \frac{\#(i:\alpha_i>\alpha_n) + \theta_n\#(i:\alpha_i=\alpha_n)}{n}$$<p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Data">Data<a class="anchor-link" href="#Data">&#182;</a></h3><p>The data considered represents the climatological data gathered from ten Ocean Buoys located in the western Atlantic. The ten Buoy spans the region between southern Bermuda to Puerto Rico.</p>
-<p><img src="IMG/Bouy_Loc.png"></p>
+<p><img src="IMG/Bouy_Loc.png">
+<a href = "https://github.com/atikinn/cs109a_anomaly/blob/master/Submission/Show_Bouy_Location.ipynb">Notebook that generates the image</a></p>
 <p>The data includes atmospheric and oceanic information. The buoy considered in this study are owned by NOAA and the National Weather Service. However, there are other buoy operating in the same area owned by different parties. In actual studies, all the data from all the buoys are considered which make this data accessible to all concerned entities. For this project, we are considering the NOAA buoys as their data are available to the public and the contained information is sufficient to the project objective. The following picture depicts how the buoy looks like:</p>
 <p><img src="IMG/bouy.jpg">
 (source: <a href="http://www.ndbc.noaa.gov/station_page.php?station=44065">NOAA</a>)</p>
@@ -269,7 +270,8 @@ $$p_i = \frac{\#(i:\alpha_i>\alpha_n) + \theta_n\#(i:\alpha_i=\alpha_n)}{n}$$<p>
 <li>Wind Speed at 10 Meters
 <li>Wind Speed at 20 Meters
 </ul><p>For each sensor, missing data is designated as series of 9's, such as 99.0 or 9999.0. These values are converted into null values so that they can be removed prior to applying the data to the anomaly detection models. The following is an example time-series plot of one feature of the data set, representing the Average Wave Period.</p>
-<p><img src="IMG/avg_wave_period.png"></p>
+<p><img src="IMG/avg_wave_period.png">
+<a href="https://github.com/atikinn/cs109a_anomaly/blob/master/Submission/BuoyDataExploration.ipynb">Corresponding notebook with code</a></p>
 <p>The timeseries plot shows the reality of real world data - it is not clean and organized.  With such chaotic data, anomaly detection may prove to be challenging.  Therefor the buoy data is a good data set for testing for anomalies.</p>
 <p>All data and modeling files can be obtained from the <a href="https://github.com/atikinn/cs109a_anomaly">Github</a></p>
 
