@@ -1,0 +1,27 @@
+Anomaly Detection - Zelong
+Harvard University
+Fall 2016
+Instructors: W. Pan, P. Protopapas, K. Rader
+Group Member: Dennis Milechin, Ivan Sunyagin, Hany Bassily
+
+Description:  This document describes the contents of the Submission repository for CS109a Class Project.
+
+Folders:
+
+- IMG --> Contains a collection of PNG files which contain charts of select results.
+- datasets --> Contains the raw data downloaded from the NOAA website <http://www.ndbc.noaa.gov/>
+
+Anomaly Detection Model Evaluation Notebooks:
+
+- BasicAnomalies.ipynb --> Testing Exchangeability Online and the Plug-in Martingale anomaly detection models.
+- BuoyDataExploration.ipynb --> Buoy Data exploration
+- Matthew_Detection.ipynb --> Notebook containing the model for detecting Hurrican Matthew.
+- Matthew_tuning.ipynb --> Notebook containing the tuning of a model for detecting Matthew Hurricane.
+- Show_Bouy_Location.ipynb --> Notebook containing code to map the locations of the bouys of interest.
+
+
+Production Model:
+- ProductionModel.ipynb --> Notebook setup for other users to apply this model to their dataset.
+
+Documentation:
+- Website OutlineHB.ipynb --> Contains the description of the work that was done.  Also see https://atikinn.github.io/cs109a_anomaly/ 
