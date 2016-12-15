@@ -1,3 +1,106 @@
-h3 {
-        font-family: "Raleway", Times, serif;
+/* Reset Styles */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  	margin: 0;
+  	padding: 0;
+  	border: 0;
+  	font: inherit;
+  	font-size: 100%;
+  	vertical-align: baseline; 
 }
+
+html {
+	width: 100%;
+}
+body {
+	background: #ededed;
+	width: 100%;
+}
+.container {
+	width: 100%;
+	padding-right: 0;
+	padding-left: 0;
+}
+.wrapper {
+	width: 65%;
+	margin: 0 auto;
+}
+
+#anenberg {
+	background: url(IMG/graph.jpg);
+	background-position: center;
+	background-attachment: fixed;
+	background-size: cover;
+	height: 700px;
+	width: 100%;
+	margin: 0;
+	padding-bottom: 1em;
+	position: relative;
+}
+#anenberg h1 {
+	font-size: 72px;
+	letter-spacing: 0.1em;
+	font-weight: bold;
+	font-family: "League Spartan", "Avenir Black", "futura_md_btbold", "Arial", "sans-serif";
+	text-transform: uppercase;
+	margin-top: 3em;
+}
+#anenberg p {
+	font-family: "League Spartan", "Avenir Black", "futura_md_btbold", "Arial", "sans-serif";
+	letter-spacing: 0.1em;
+	font-size: 20px;
+	text-transform: uppercase;
+	font-weight: 300;
+	margin-top: 3em;
+}
+#anenberg p:first-child{
+	margin-top: 4em;
+}
+#anenberg p, h1 {
+	color: #fff;
+	text-align: center;
+}
+.wrapper p:first-child {
+	margin-top: 1em;
+}
+h2 {
+	font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+	font-size: 36px !important;
+	margin-top: 1em;
+	color: #900;
+}
+h3 {
+    font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+    font-size: 32px !important;
+    border: 3px solid #373737;
+    border-left-style: none;
+    border-right-style: none;
+    border-top-style: none;
+    padding-bottom: 10px;
+    color: #373737;
+}
+
+h4 {
+	font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+    font-size: 24px !important;
+    color: #373737;
+
+}
+p, ul, ol {
+	font-size: 21px;
+	font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+	color: #373737;
+}
+
